@@ -24,6 +24,27 @@
 
 </head>
 <body class="geist-font">
+    <!-- header -->
+    <header class="bg-base-100 shadow-sm">
+        <div class="navbar px-20 flex justify-between">
+            <div class="flex gap-3 items-center">
+                <img src="assets/github-logo.png" alt="" class="w-9">
+                <h2 class="font-semibold text-[24px]">GitHub Issues Tracker</h2>
+            </div>
+            <div class="flex gap-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search issues..." class="input input-bordered w-24 md:w-auto pl-10" />
+                    <span class="absolute left-4 top-2 z-10 text-[#909090] icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+                <div class="">
+                    <button class="btn btn-soft btn-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        New Issue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
     
     <!-- JavaScript-->
     <script src="scripts/script.js"></script>
