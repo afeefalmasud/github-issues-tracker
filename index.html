@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Issues Tracker</title>
+    <title>Login | GitHub</title>
     <!-- FavIcon-->
     <link rel="shortcut icon" href="assets/github-logo.png" type="image/x-icon">
 
@@ -19,13 +19,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
-<body class="geist-font">
-    
+<body class="geist-font bg-[#eef6fc] min-h-screen flex items-center justify-center">
+    <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-md">
+        <div class="flex flex-col items-center px-0 md:px-10 lg:px-15">
+            <img src="assets/github-logo.png" alt="logo">
+            <h2 class="font-semibold text-[24px] pt-6 text-[#1F2937]">GitHub Issues Tracker</h2>
+            <p class="text-[#64748B] pt-1 ">Sign in to manage your issues</p>
+        </div>
+        <form action="" class="py-6">
+            <div>
+                <p class="text-[#1F2937] font-semibold pb-2">Username</p>
+                <input type="text" placeholder="Enter Username" class="p-4 text-[#64748B] rounded-md border-2 border-[#4343435b] w-full" id="username">
+            </div>
+            <div>
+                <p class="text-[#1F2937] font-semibold pb-2 pt-4">Password</p>
+                <input type="password" name="password" id="password" placeholder="Enter Password" class="p-4 text-[#64748B] rounded-md border-2 border-[#4343435b] w-full">
+            </div>
+            <a href="#" class="btn btn-primary mt-6 flex hover:bg-[#6b72b016] hover:text-primary transition" id="btn">Sign In</a>
+        </form>
+        <div class="flex flex-col items-center bg-[#e8f3fb70] rounded-md">
+            <p class="text-[#64748B] pt-6">Demo Credentials:</p>
+            <p class="text-[#1F2937] pt-8"><span class="font-semibold">Username: </span>admin</p>
+            <p class="text-[#1F2937] pb-6"><span class="font-semibold">Password: </span>admin123</p>
+        </div>
+    </div>
+
     <!-- JavaScript-->
-    <script src="scripts/script.js"></script>
+    <script src="scripts/login.js"></script>
 </body>
 </html>

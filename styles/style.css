@@ -4,3 +4,13 @@
   font-family: "Geist", sans-serif;
   font-optical-sizing: auto;
 }
+
+@media (min-width: 300px) and (max-width: 767px){
+  .btn{
+    transition: all ease-in 0.5s;
+  }
+  .btn:hover{
+    background-color: #6b72b016;
+    color: #2929ff;
+  }
+}
