@@ -3,7 +3,8 @@ const card = document.querySelector('.card-container');
 const allBtn = document.querySelector('#all-btn');
 const openBtn = document.querySelector('#open-btn');
 const closedBtn = document.querySelector('#closed-btn');
-
+const issueCount = document.querySelector('#issue-count')
+const cardContainer = document.querySelector('.card-container')
 // create card function 
 const createCard = issue => {
 
@@ -62,10 +63,19 @@ const createCard = issue => {
         `
     }
 
+    // top border add
+    let borderT = '';
+    if(issue.status === 'open'){
+        borderT = 'border-t-4 border-[#00A96E]';
+    }
+    else if(issue.status === 'closed'){
+        borderT = 'border-t-4 border-[#A855F7]';
+    }
+
     // card structure
     let div = document.createElement('div');
     div.innerHTML = `
-        <div class="card-content bg-[#faf9f9] py-7 rounded-xl shadow-lg h-full">
+        <div class="card-content bg-[#faf9f9] py-7 rounded-xl shadow-lg h-full ${borderT}">
             <div class="flex justify-between items-center mb-6 px-6">
                 <img src="assets/${issue.status}-status.png" alt="">
                 <div class="${priorityBg} px-6 py-1.5 rounded-full">
@@ -107,13 +117,18 @@ const issuesCard = async () => {
         createCard(data);
     }
 
+    // issue-count
+    let count = cardContainer.children.length;
+    issueCount.innerHTML = count + ' Issues';
+
     // open button toggle
     openBtn.addEventListener('click',() => {
 
         // button class add and remove
         openBtn.classList.remove('btn-soft');
         allBtn.classList.add('btn-soft');
-        closedBtn.classList.add('btn-soft');
+        closedBtn.classList.add('bg-purple-100', 'text-purple-600');
+        closedBtn.classList.remove('bg-purple-600', 'text-purple-100');
 
         //open btn -> cards
         card.innerHTML = '';
@@ -122,6 +137,10 @@ const issuesCard = async () => {
                 createCard(dataOpen);
             }
         }
+
+        // open-issue-count
+        let count = cardContainer.children.length;
+        issueCount.innerHTML = count + ' Issues';
     })
 
     // closed button toggle
@@ -130,7 +149,8 @@ const issuesCard = async () => {
         // button class add and remove
         openBtn.classList.add('btn-soft');
         allBtn.classList.add('btn-soft');
-        closedBtn.classList.remove('btn-soft');
+        closedBtn.classList.remove('bg-purple-100', 'text-purple-600');
+        closedBtn.classList.add('bg-purple-600', 'text-purple-100');
 
         //closed btn -> cards
         card.innerHTML = '';
@@ -139,6 +159,10 @@ const issuesCard = async () => {
                 createCard(dataClosed);
             }
         }
+
+        // closed-issue-count
+        let count = cardContainer.children.length;
+        issueCount.innerHTML = count + ' Issues';
     })
 
     // all button toggle
@@ -147,13 +171,18 @@ const issuesCard = async () => {
         // button class add and remove
         openBtn.classList.add('btn-soft');
         allBtn.classList.remove('btn-soft');
-        closedBtn.classList.add('btn-soft');
+        closedBtn.classList.add('bg-purple-100', 'text-purple-600');
+        closedBtn.classList.remove('bg-purple-600', 'text-purple-100');
 
         //all btn -> cards
         card.innerHTML = '';
         for(const dataAll of datas){
             createCard(dataAll);
         }
+
+        // all-issue-count
+        let count = cardContainer.children.length;
+        issueCount.innerHTML = count + ' Issues';
     })
 }
 issuesCard();
