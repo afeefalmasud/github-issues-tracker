@@ -8,7 +8,6 @@ const issuesCard = async () => {
     card.innerHTML = '';
     for(const issue of datas){
         let div = document.createElement('div');
-
         let priorityBg = '';
         let priorityText = '';
         if(issue.priority === 'high'){
@@ -23,28 +22,57 @@ const issuesCard = async () => {
             priorityBg = 'bg-[#EEEFF2]';
             priorityText = 'text-[#9CA3AF]';
         }
+
+        let labelsHTML = '';
+        for(const label of issue.labels){
+            let labelBG = '';
+            let labelText = '';
+            let labelBorder = '';
+
+            if(label === 'bug'){
+                labelBG = 'bg-[#FEECEC]';
+                labelText = 'text-[#EF4444]';
+                labelBorder = 'border-[#FECACA]';
+            }
+            else if(label === 'enhancement'){
+                labelBG = 'bg-[#BBF7D0]';
+                labelText = 'text-[#00A96E]';
+                labelBorder = 'border-[#7cffa8]';
+            }
+            else if(label === 'help wanted'){
+                labelBG = 'bg-[#FFF8DB]';
+                labelText = 'text-[#D97706]';
+                labelBorder = 'border-[#FDE68A]';
+            }
+            else if(label === 'good first issue'){
+                labelBG = 'bg-[#EEF2FF]';
+                labelText = 'text-[#6366F1]';
+                labelBorder = 'border-[#C7D2FE]';
+            }
+            else if(label === 'documentation'){
+                labelBG = 'bg-[#F1F5F9]';
+                labelText = 'text-[#475569]';
+                labelBorder = 'border-[#CBD5F1]';
+            }
+            labelsHTML += `
+                <div class="${labelBG} px-3 py-1.5 rounded-full border ${labelBorder}">
+                    <p class="${labelText} text-[12px] font-medium">${label.toUpperCase()}</p>
+                </div>
+            `
+        }
         div.innerHTML = `
             <div class="card-content bg-[#faf9f9] py-7 rounded-xl shadow-lg h-full">
                 <div class="flex justify-between items-center mb-6 px-6">
-                    <img src="assets/${issue.status}-Status.png" alt="">
+                    <img src="assets/${issue.status}-status.png" alt="">
                     <div class="${priorityBg} px-6 py-1.5 rounded-full">
                         <p class="${priorityText} text-[14px] font-medium">${issue.priority.toUpperCase()}</p>
                     </div>
                 </div>
-                <div class="px-6 h-[190px]">
+                <div class="px-6 md:h-[190px]">
                     <h4 class="font-semibold text-[16px] text-[#1F2937] mb-4">${issue.title}</h4>
                     <p class="text-[#64748B] text-[14px] mb-4">${issue.description}</p>
-                    <div class="flex gap-2 mb-6">
-                        ${issue.labels[0] ? `
-                            <div class="bg-[#DEFCE8] px-3 py-1.5 rounded-sm lg:rounded-full border border-[#89fab1]">
-                                <p class="text-[#00A96E] text-[12px] font-medium">${issue.labels[0].toUpperCase()}</p>
-                            </div>
-                        ` : ''}
-                        ${issue.labels[1] ? `
-                            <div class="bg-[#FFF8DB] px-3 py-1.5 rounded-sm lg:rounded-full border border-[#FDE68A]">
-                                <p class="text-[#D97706] text-[12px] font-medium">${issue.labels[1].toUpperCase()}</p>
-                            </div>
-                        ` : ''}    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        ${labelsHTML} 
                     </div>
                 </div>
                 <div class="border-b-2 border-[#2828280f]"></div>
