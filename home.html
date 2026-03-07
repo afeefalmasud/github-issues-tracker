@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="assets/github-logo.png" type="image/x-icon">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/home.css">
 
     <!-- DaisyUI + Tailwind -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -37,7 +37,7 @@
                     <span class="absolute left-4 top-2 z-10 text-[#909090] icon"><i class="fa-solid fa-magnifying-glass"></i></span>
                 </div>
                 <div>
-                    <button class="btn btn-soft btn-primary">
+                    <button class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i>
                         New Issue
                     </button>
@@ -51,9 +51,9 @@
         <div class="container mx-auto py-15 px-6 md:px-0">
             <!-- Toggle button -->
             <div class="flex gap-3 bg-[#ffffff] p-6 rounded-xl shadow-md">
-                <button class="btn btn-primary md:px-10 font-medium text-[#ffffff] border-[#43434332] border-2">All</button>
-                <button class="btn md:px-10 text-[#64748B] font-medium border-[#43434332] border-2">Open</button>
-                <button class="btn md:px-10 text-[#64748B] font-medium border-[#43434332] border-2">Closed</button>
+                <button class="btn btn-primary md:px-10 font-medium rounded-md" id="all-btn">All</button>
+                <button class="btn btn-soft btn-success md:px-10 font-medium rounded-md" id="open-btn">Open</button>
+                <button class="btn btn-soft btn-error md:px-10 font-medium rounded-md" id="closed-btn">Closed</button>
             </div>
             <!-- Issues -->
             <div class="flex justify-between items-left flex-col gap-3 md:flex-row md:items-stretch md:gap-0 p-6 rounded-xl shadow-md bg-[#ffffff] mt-4">

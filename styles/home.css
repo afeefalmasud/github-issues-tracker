@@ -1,0 +1,12 @@
+/* home.html */
+
+@import "tailwindcss";
+
+.geist-font {
+  font-family: "Geist", sans-serif;
+  font-optical-sizing: auto;
+}
+
+input:not(:placeholder-shown) + .icon{
+  display: none;
+}

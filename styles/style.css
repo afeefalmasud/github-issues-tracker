@@ -1,3 +1,5 @@
+/* index.html */
+
 @import "tailwindcss";
 
 .geist-font {
@@ -5,12 +7,6 @@
   font-optical-sizing: auto;
 }
 
-/* home.html */
-input:not(:placeholder-shown) + .icon{
-  display: none;
-}
-
-/* index.html */
 @media (min-width: 300px) and (max-width: 767px){
   .btn{
     transition: all ease-in 0.2s;
