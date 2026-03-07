@@ -1,10 +1,13 @@
 const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues'
+
 const card = document.querySelector('.card-container');
 const allBtn = document.querySelector('#all-btn');
 const openBtn = document.querySelector('#open-btn');
 const closedBtn = document.querySelector('#closed-btn');
-const issueCount = document.querySelector('#issue-count')
-const cardContainer = document.querySelector('.card-container')
+const issueCount = document.querySelector('#issue-count');
+const cardContainer = document.querySelector('.card-container');
+const modal = document.querySelector('#my_modal_5');
+
 // create card function 
 const createCard = issue => {
 
@@ -103,6 +106,8 @@ const createCard = issue => {
         </div>
     `
     card.append(div);
+
+    div.addEventListener('click',()=>loadData(issue.id));
 }
 
 // card fetch
@@ -186,3 +191,116 @@ const issuesCard = async () => {
     })
 }
 issuesCard();
+
+const loadData = async id =>{
+
+    // fetch single issue
+    const singleURL = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    let response = await fetch(singleURL);
+    let result = await response.json();
+    let datas = result.data;
+    modal.innerHTML = '';
+    let div = document.createElement('div');
+
+    //status customize
+    let statusBG = '';
+    if(datas.status === 'open'){
+        statusBG = 'bg-[#00A96E]';
+    }
+    else if(datas.status === 'closed'){
+        statusBG = 'bg-[#A855F7]';
+    }
+    // priority customize
+    let priorityBg = '';
+    let priorityText = '';
+    if(datas.priority === 'high'){
+        priorityBg = 'bg-[#FEECEC]';
+        priorityText = 'text-[#EF4444]';
+    }
+    else if(datas.priority === 'medium'){
+        priorityBg = 'bg-[#FFF6D1]';
+        priorityText = 'text-[#F59E0B]';
+    }
+    else if(datas.priority === 'low'){
+        priorityBg = 'bg-[#EEEFF2]';
+        priorityText = 'text-[#9CA3AF]';
+    }
+    // label customize
+    let labelsHTML = '';
+    for(const label of datas.labels){
+        let labelBG = '';
+        let labelText = '';
+        let labelBorder = '';
+
+        if(label === 'bug'){
+            labelBG = 'bg-[#FEECEC]';
+            labelText = 'text-[#EF4444]';
+            labelBorder = 'border-[#FECACA]';
+        }
+        else if(label === 'enhancement'){
+            labelBG = 'bg-[#BBF7D0]';
+            labelText = 'text-[#00A96E]';
+            labelBorder = 'border-[#7cffa8]';
+        }
+        else if(label === 'help wanted'){
+            labelBG = 'bg-[#FFF8DB]';
+            labelText = 'text-[#D97706]';
+            labelBorder = 'border-[#FDE68A]';
+        }
+        else if(label === 'good first issue'){
+            labelBG = 'bg-[#EEF2FF]';
+            labelText = 'text-[#6366F1]';
+            labelBorder = 'border-[#C7D2FE]';
+        }
+        else if(label === 'documentation'){
+            labelBG = 'bg-[#F1F5F9]';
+            labelText = 'text-[#475569]';
+            labelBorder = 'border-[#CBD5F1]';
+        }
+        labelsHTML += `
+            <div class="${labelBG} px-3 py-1.5 rounded-full border ${labelBorder}">
+                <p class="${labelText} text-[12px] font-medium">${label.toUpperCase()}</p>
+            </div>
+        `
+    }
+    // modal card 
+    div.innerHTML = `
+        <div class="modal-box">
+            <h2 class="font-bold text-[24px] text-[#1F2937] pb-2">${datas.title}</h2>
+            <div class="flex gap-10 items-center pb-6">
+                <div class="px-4 py-1.5 ${statusBG} rounded-full">
+                    <p class="text-[14px] font-medium text-[#ffffff]">${datas.status}</p>
+                </div>
+                <ul class="list-disc flex">
+                    <li class="pr-10 text-[#64748B] text-[14px]">Opened by ${datas.author}</li>
+                    <li class="text-[#64748B] text-[14px]">${datas.createdAt}</li>
+                </ul>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-6">
+                ${labelsHTML}
+            </div>
+            <p class="text-[#64748B] text-[16px] pt-6">${datas.description}</p>
+            <div class="mt-6 bg-[#eef6fc] py-4 px-10 rounded-md shadow-sm flex justify-between">
+                <div>
+                    <p class="text-[#64748B] text-[16px]">Assignee:</p>
+                    <p class="text-[#1F2937] text-[16px] font-semibold">${datas.assignee}</p>
+                </div>
+                <div>
+                    <p class="text-[16px] text-[#64748B]">Priority:</p>
+                    <div class="${priorityBg} px-6 py-1.5 rounded-full">
+                        <p class="${priorityText} text-[14px] font-medium">${datas.priority.toUpperCase()}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn btn-soft btn-secondary">Close</button>
+                </form>
+            </div>
+        </div>
+    `
+    modal.appendChild(div);
+    modal.showModal();
+}
+
+
