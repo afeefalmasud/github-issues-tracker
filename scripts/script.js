@@ -7,6 +7,9 @@ const closedBtn = document.querySelector('#closed-btn');
 const issueCount = document.querySelector('#issue-count');
 const cardContainer = document.querySelector('.card-container');
 const modal = document.querySelector('#my_modal_5');
+const search = document.querySelector('#input-search');
+const spinner = document.querySelector('#spinner');
+
 
 // create card function 
 const createCard = issue => {
@@ -110,18 +113,34 @@ const createCard = issue => {
     div.addEventListener('click',()=>loadData(issue.id));
 }
 
-// card fetch
-const issuesCard = async () => {
-	let response = await fetch(url);
-    let result = await response.json();
-    let datas = result.data;
+// loading
+const loading = (status) =>{
+    if(status== true){
+        spinner.classList.remove('hidden');
+        cardContainer.classList.add('hidden');
+    }
+    else{
+        spinner.classList.add('hidden');
+        cardContainer.classList.remove('hidden');
+    }
+}
 
+// card fetch
+const issuesCard = async (datasParam) => {
+    loading(true);
+    let datas = datasParam;
+    if(!datas){
+        let response = await fetch(url);
+        let results = await response.json();
+        datas = results.data;
+    }
     // all cards
+    
     card.innerHTML = '';
     for(const data of datas){
         createCard(data);
     }
-
+    loading(false);
     // issue-count
     let count = cardContainer.children.length;
     issueCount.innerHTML = count + ' Issues';
@@ -136,13 +155,14 @@ const issuesCard = async () => {
         closedBtn.classList.remove('bg-purple-600', 'text-purple-100');
 
         //open btn -> cards
+        loading(true);
         card.innerHTML = '';
         for(const dataOpen of datas){
             if(dataOpen.status === 'open'){
                 createCard(dataOpen);
             }
         }
-
+        loading(false);
         // open-issue-count
         let count = cardContainer.children.length;
         issueCount.innerHTML = count + ' Issues';
@@ -158,13 +178,14 @@ const issuesCard = async () => {
         closedBtn.classList.add('bg-purple-600', 'text-purple-100');
 
         //closed btn -> cards
+        loading(true);
         card.innerHTML = '';
         for(const dataClosed of datas){
             if(dataClosed.status === 'closed'){
                 createCard(dataClosed);
             }
         }
-
+        loading(false);
         // closed-issue-count
         let count = cardContainer.children.length;
         issueCount.innerHTML = count + ' Issues';
@@ -180,11 +201,12 @@ const issuesCard = async () => {
         closedBtn.classList.remove('bg-purple-600', 'text-purple-100');
 
         //all btn -> cards
+        loading(true);
         card.innerHTML = '';
         for(const dataAll of datas){
             createCard(dataAll);
         }
-
+        loading(false);
         // all-issue-count
         let count = cardContainer.children.length;
         issueCount.innerHTML = count + ' Issues';
@@ -303,4 +325,21 @@ const loadData = async id =>{
     modal.showModal();
 }
 
+// search
+const inputSearch = async () => {
+    let word = search.value.trim().toLowerCase();
+    // if there is no search then to show all cards:
+    if(word === ''){
+        issuesCard();
+        return;
+    }
 
+    // search fetch
+    const searchURL = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${word}`
+    const response = await fetch(searchURL);
+    const result = await response.json();
+    const datas = result.data;
+    
+    issuesCard(datas);
+}
+search.addEventListener("input", inputSearch);
